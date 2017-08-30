@@ -14,7 +14,8 @@ public class CalculadoraSDMActivity extends AppCompatActivity implements View.On
     private Button zeroBtn, umBtn, doisBtn, tresBtn, quatroBtn, cincoBtn,
             seisBtn, seteBtn, oitoBtn, noveBtn;
     private Button adicaoBtn, subtracaoBtn, multiplicacaoBtn, divisaoBtn,
-            resultadoBtn, pontoBtn, porcetagemBtn, limpezaTotalBtn;
+            resultadoBtn, pontoBtn, porcetagemBtn, limpezaTotalBtn,
+            limpezaParcialBtn, raizQuadradaBtn;
     private boolean concatenaLcd;
     private String resultado;
     private Calculadora calculadora;
@@ -61,6 +62,10 @@ public class CalculadoraSDMActivity extends AppCompatActivity implements View.On
         porcetagemBtn.setOnClickListener(this);
         limpezaTotalBtn = (Button) findViewById(R.id.btn_limpeza_total);
         limpezaTotalBtn.setOnClickListener(this);
+        limpezaParcialBtn = (Button) findViewById(R.id.btn_limpeza_parcial);
+        limpezaParcialBtn.setOnClickListener(this);
+        raizQuadradaBtn = (Button) findViewById(R.id.btn_raiz_quadrada);
+        raizQuadradaBtn.setOnClickListener(this);
     }
     @Override
     public void onClick(View view) {
@@ -75,12 +80,6 @@ public class CalculadoraSDMActivity extends AppCompatActivity implements View.On
             lcd.append(String.valueOf(botao.getText().toString()));
             concatenaLcd = true;
         }
-       /* else if(botao == adicaoBtn){
-            Soma somar = new Soma();
-            String resultado = somar.somando(lcd.getText().toString());
-            lcd.setText(resultado);
-            concatenaLcd = false;
-        }*/
         else {
             if (botao == pontoBtn) {
                 if (!lcd.getText().toString().contains(getString(R.string.ponto))){
@@ -133,6 +132,16 @@ public class CalculadoraSDMActivity extends AppCompatActivity implements View.On
                             Float.parseFloat(lcd.getText().toString()),
                             Calculadora.LIMPARTELA)));
                     lcd.setText("");
+                    concatenaLcd = false;
+                }
+                else if (botao == limpezaParcialBtn) {
+                    String valor = lcd.getText().toString();
+                    lcd.setText(valor.substring (0, valor.length() - 1));
+                }
+                else if (botao == raizQuadradaBtn) {
+                    lcd.setText(Float.toString(calculadora.calcula(
+                            Float.parseFloat(lcd.getText().toString()),
+                            Calculadora.RAIZ_QUADRADA)));
                     concatenaLcd = false;
                 }
             }
