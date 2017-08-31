@@ -2,12 +2,9 @@ package br.edu.ifspsaocarlos.sdm.calculadorasdm;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import br.edu.ifspsaocarlos.sdm.calculadorasdm.servicos.Soma;
 
 public class CalculadoraSDMActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView lcd;

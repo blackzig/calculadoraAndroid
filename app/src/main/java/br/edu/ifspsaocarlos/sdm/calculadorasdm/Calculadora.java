@@ -2,6 +2,8 @@ package br.edu.ifspsaocarlos.sdm.calculadorasdm;
 
 import android.util.Log;
 
+import br.edu.ifspsaocarlos.sdm.calculadorasdm.servicos.RaizQuadrada;
+
 public class Calculadora {
     private static final Calculadora ourInstance = new Calculadora();
     private float operando;
@@ -27,32 +29,14 @@ public class Calculadora {
     }
 
     public float calcula(float valor, int operacao) {
-        Log.i("calcula ",String.valueOf(operacao));
+        //Log.i("calcula ",String.valueOf(operacao));
         if(operacao==LIMPARTELA){
             operando = 0.0f;
             esperaProximoValor = 0;
         }
         else if(operacao==RAIZ_QUADRADA){
-            String valorSTR = String.valueOf(valor);
-            int posicaoDoPonto = valorSTR.indexOf(".");
-
-            String valoresDepoisDoPonto = valorSTR.substring(posicaoDoPonto+1,valorSTR.length());
-            //Log.i("valoresDepoisDoPonto ",valoresDepoisDoPonto);
-
-            String valoresAntesDoPonto = valorSTR.substring(0,posicaoDoPonto);
-            //Log.i("valoresAntesDoPonto ",valoresAntesDoPonto);
-
-            String ultimoNumeroDeVADP = valorSTR.substring(valoresAntesDoPonto.length()-1,valoresAntesDoPonto.length());
-            Log.i("ultimoNumeroDeVADP ",ultimoNumeroDeVADP);
-
-
-            if(valoresDepoisDoPonto.equals("0")){
-                Log.i("tudo zero ","inútil");
-
-            }
-
-           String ultimaUnidade = valorSTR.substring(1,valorSTR.length()-2);
-           // Log.i("ultimaUnidade ",ultimaUnidade);
+            RaizQuadrada rq = new RaizQuadrada();
+            operando = rq.calcularRaiz(valor);
         }
         else if(operando!=0.0f){
             if(operacao==RESULTADO){
