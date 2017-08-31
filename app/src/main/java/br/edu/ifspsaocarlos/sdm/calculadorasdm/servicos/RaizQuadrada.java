@@ -13,6 +13,7 @@ public class RaizQuadrada {
     Integer contador = 1;
     Integer algarismoDezena = 0;
     Integer algarismoUnidade = 0;
+    List<String> grupoDeNumeros = new ArrayList<>();
 
     public Float calcularRaiz(float valor){
 
@@ -128,21 +129,81 @@ public class RaizQuadrada {
     }
 
     private void numerosComMaisDeQuatroDigitos(String valoresAntesDoPonto, String valoresDepoisDoPonto){
-        List grupoDeNumeros = new ArrayList<>();
-        if(valoresDepoisDoPonto.equals("0")){
-            Integer ehImpar = valoresAntesDoPonto.length()%2;
+        //https://www.youtube.com/watch?v=3K9F9haugUI
+        separarNumeroEmGrupos(valoresAntesDoPonto, valoresDepoisDoPonto);
 
-            if(ehImpar!=0){
-                "0".concat(valoresAntesDoPonto);
-            }
+        List<Integer> divisor = new ArrayList<>();
+       // List<Integer> numerosParaDividir =
 
-            for(int i=0; i<valoresAntesDoPonto.length(); i++){
-                Integer parametro1 = i+2;
-                String grupo = valoresAntesDoPonto.substring(i, i+2);
-                grupoDeNumeros.add(grupo);
-                i++;
-            }
+        for(String s: grupoDeNumeros){
+
+            Integer contadorLocal = procurarNumeroEmPotencias(s);
+
+            Log.i("divisor ", String.valueOf(contadorLocal));
+            divisor.add(contadorLocal);
+
+            Integer numeroParaSubtrair = potencias[contadorLocal-1];
+            Log.i("numeroParaSubtrair ", String.valueOf(numeroParaSubtrair));
+
+            String primeiroNumeroDoGrupo = grupoDeNumeros.get(0);
+            Integer numeroDoGrupoInt = Integer.parseInt(primeiroNumeroDoGrupo);
+
+            Integer resultadoSubtracao = numeroDoGrupoInt - numeroParaSubtrair;
+            Log.i("resultadoSubtracao ",String.valueOf(resultadoSubtracao));
+
+            String segundoNumeroDoGrupo = grupoDeNumeros.get(1);
+            Integer segundoNumeroDoGrupoInt = Integer.parseInt(segundoNumeroDoGrupo);
+
+
         }
 
     }
+
+    private Integer procurarNumeroEmPotencias(String s){
+        Integer contadorLocal = 0;
+        for(Integer i: potencias){
+            Integer numero = Integer.parseInt(s);
+            if(i<=numero){
+                contadorLocal++;
+            }else{
+                break;
+            }
+        }
+
+        return contadorLocal;
+    }
+
+    private void separarNumeroEmGrupos(String valoresAntesDoPonto, String valoresDepoisDoPonto){
+        if(valoresDepoisDoPonto.equals("0")){
+            Integer parOuImpar = valoresAntesDoPonto.length()%2;
+
+            Integer primeiraRodada = 0;
+            String grupo = null;
+
+            if(parOuImpar==0){
+                for(int i=0; i<valoresAntesDoPonto.length(); i++){
+                    if(primeiraRodada==0){
+                        primeiraRodada=1;
+                        grupo = valoresAntesDoPonto.substring(0, 2);
+                    }else{
+                        grupo = valoresAntesDoPonto.substring(i, i+2);
+                    }
+                    i++;
+                    grupoDeNumeros.add(grupo);
+                }
+            }else{
+                for(int i=0; i<valoresAntesDoPonto.length(); i++){
+                    if(primeiraRodada==0){
+                        primeiraRodada=1;
+                        grupo = valoresAntesDoPonto.substring(0, 1);
+                    }else{
+                        grupo = valoresAntesDoPonto.substring(i, i+2);
+                        i++;
+                    }
+                    grupoDeNumeros.add(grupo);
+                }
+            }
+        }
+    }
+
 }
